@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Shamba Trade Kenya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared Theme -->
+    <script src="../shared/theme.js"></script>
+</head>
+
+<body class="bg-gray-50 h-screen flex items-center justify-center font-sans">
+
+    <div class="flex w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden mx-4 h-[600px]">
+
+        <div
+            class="hidden md:flex md:w-1/2 bg-kenyagreen-800 flex-col justify-center items-center text-white p-8 relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20"></div>
+            <div class="absolute bottom-10 right-10 w-20 h-20 bg-white rounded-full opacity-10"></div>
+
+            <div class="text-center z-10">
+                <div class="inline-block bg-white text-kenyagreen-800 p-4 rounded-full mb-6 shadow-lg">
+                    <i class="fa-solid fa-user-plus text-4xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-2">Join ShambaTrade</h2>
+                <p class="text-gray-200">Start your journey with us today.</p>
+
+                <div class="mt-8 space-y-3 text-left bg-kenyagreen-600 bg-opacity-30 p-6 rounded-lg backdrop-blur-sm">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Expand Your Market</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Connect with Farmers</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Secure Transactions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative overflow-y-auto">
+
+            <div class="text-center md:text-left mb-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-1">Create Account</h3>
+                <p class="text-gray-500 text-sm">Fill in your details to get started.</p>
+            </div>
+
+            <form onsubmit="handleRegister(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="fullname" required placeholder="John Doe"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none transition">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-bold">+254</span>
+                        <input type="tel" id="r_phone" required placeholder="700 000 000"
+                            class="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <input type="password" id="r_password" required placeholder="••••••••"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none transition">
+                        <i class="fa-solid fa-eye absolute right-4 top-3 text-gray-400 cursor-pointer hover:text-kenyagreen-600"
+                            onclick="togglePassword('r_password', this)"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">Confirm Password</label>
+                    <div class="relative">
+                        <input type="password" id="r_confirm_password" required placeholder="••••••••"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none transition">
+                        <i class="fa-solid fa-eye absolute right-4 top-3 text-gray-400 cursor-pointer hover:text-kenyagreen-600"
+                            onclick="togglePassword('r_confirm_password', this)"></i>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Account Type</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label
+                            class="relative flex items-center justify-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-kenyagreen-500 transition has-[:checked]:border-kenyagreen-600 has-[:checked]:bg-kenyagreen-50">
+                            <input type="radio" name="role" value="farmer" checked class="sr-only">
+                            <div class="text-center">
+                                <i></i>
+                                <span class="block text-sm font-bold text-gray-700">Farmer</span>
+                            </div>
+                        </label>
+                        <label
+                            class="relative flex items-center justify-center p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-yellow-400 transition has-[:checked]:border-yellow-400 has-[:checked]:bg-yellow-50">
+                            <input type="radio" name="role" value="admin" class="sr-only">
+                            <div class="text-center">
+                                <i></i>
+                                <span class="block text-sm font-bold text-gray-700">Admin</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="terms" required
+                        class="w-4 h-4 text-kenyagreen-600 rounded border-gray-300 focus:ring-kenyagreen-500">
+                    <label for="terms" class="text-xs text-gray-600">I agree to the <a href="#"
+                            class="text-kenyagreen-600 font-bold hover:underline">Terms & Conditions</a></label>
+                </div>
+
+                <button type="submit"
+                    class="w-full py-3 bg-kenyagreen-600 hover:bg-kenyagreen-700 text-white font-bold rounded-lg shadow-md transition transform active:scale-95 flex justify-center items-center gap-2">
+                    <span>Register</span>
+                    <i class="fa-solid fa-user-check"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>Already have an account? <a href="login.html"
+                        class="text-kenyagreen-600 font-bold hover:underline">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/register.js"></script>
+</body>
+
+</html>
