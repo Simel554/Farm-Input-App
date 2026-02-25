@@ -1,12 +1,21 @@
+/**
+ * Handles the registration form submission
+ */
 async function handleRegister(e) {
     e.preventDefault();
+    
+    // Retrieve values
     const fullname = document.getElementById('fullname').value;
     const phone = document.getElementById('r_phone').value;
     const pass = document.getElementById('r_password').value;
     const confirmPass = document.getElementById('r_confirm_password').value;
-    const role = document.querySelector('input[name="role"]:checked').value;
+    
+    // Get role safely (defaults to 'farmer' if nothing checked)
+    const roleEl = document.querySelector('input[name="role"]:checked');
+    const role = roleEl ? roleEl.value : 'farmer';
 
-    // Simple Validation
+    // --- FRONTEND VALIDATION ---
+    
     if (phone.length < 9) {
         alert("Please enter a valid Kenyan phone number.");
         return;
@@ -25,12 +34,15 @@ async function handleRegister(e) {
     const btn = e.target.querySelector('button[type="submit"]');
     const originalText = btn.innerHTML;
 
-    // Loading State
+    // UI Loading State
     btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Creating Account...';
+    btn.disabled = true; 
     btn.classList.add('opacity-75', 'cursor-not-allowed');
 
     try {
-        const response = await fetch('http://localhost:5000/api/register', {
+        // 
+        // Hit the Flask API endpoint using a relative path
+        const response = await fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -46,23 +58,36 @@ async function handleRegister(e) {
         const data = await response.json();
 
         if (response.ok) {
+            // Success Feedback
             alert(`Account created successfully for ${fullname}! Redirecting to Login...`);
-            window.location.href = 'login.html';
+            
+            // REDIRECTION FIX: 
+            // Use the Flask route '/login' defined in app.py
+            window.location.href = '/login'; 
+            
         } else {
+            // Handle server-side errors (e.g., "Phone number already exists")
             alert(data.error || 'Registration failed. Please try again.');
         }
 
     } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please check your connection.');
+        console.error('Registration Error:', error);
+        alert('Could not connect to the server. Please ensure your Python backend is running.');
     } finally {
+        // Reset UI state
         btn.innerHTML = originalText;
+        btn.disabled = false;
         btn.classList.remove('opacity-75', 'cursor-not-allowed');
     }
 }
 
+/**
+ * Toggles visibility of the password fields
+ */
 function togglePassword(inputId, icon) {
     const input = document.getElementById(inputId);
+    if (!input) return;
+
     if (input.type === "password") {
         input.type = "text";
         icon.classList.remove('fa-eye');

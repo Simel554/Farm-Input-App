@@ -5,371 +5,281 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shamba Trade Kenya | Farmer's Marketplace</title>
-    <!-- Tailwind CSS -->
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Shared Theme -->
-    <script src="../shared/theme.js"></script>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <script src="/shared/theme.js"></script>
+    
+    <script>
+        // Tailwind Configuration for Shamba Trade Branding
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenyagreen: {
+                            50: '#f0f9f0',
+                            500: '#2e7d32',
+                            600: '#256629',
+                            700: '#1b4d1f',
+                            800: '#133516',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .view-section { transition: opacity 0.3s ease-in-out; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100 text-gray-800 font-sans h-screen flex flex-col overflow-hidden">
 
-    <!-- Navbar -->
     <nav class="bg-kenyagreen-800 text-white shadow-lg z-30">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('market')">
                     <div>
-                        <h1 class="font-bold text-lg leading-tight">ShambaTrade <span class="text-yellow-400">KE</span>
-                        </h1>
-                        <p class="text-[10px] text-gray-300 uppercase tracking-wider">By farmers for farmers to farmers.</p>
+                        <h1 class="font-bold text-lg leading-tight">ShambaTrade <span class="text-yellow-400">KE</span></h1>
+                        <p class="text-[10px] text-gray-300 uppercase tracking-wider">By farmers for farmers.</p>
                     </div>
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <button onclick="switchView('market')"
-                        class="nav-btn hover:text-yellow-400 transition font-medium"><i
-                            class="fa-solid fa-shop mr-1"></i> Market</button>
-                    <button onclick="switchView('selling')"
-                        class="nav-btn hover:text-yellow-400 transition font-medium"><i
-                            class="fa-solid fa-tags mr-1"></i> My Listings</button>
-                    <button onclick="openSellModal()"
-                        class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg font-bold transition shadow-md">
+                    <button onclick="switchView('market')" class="nav-btn hover:text-yellow-400 transition font-medium">
+                        <i class="fa-solid fa-shop mr-1"></i> Market
+                    </button>
+                    <button onclick="switchView('selling')" class="nav-btn hover:text-yellow-400 transition font-medium">
+                        <i class="fa-solid fa-tags mr-1"></i> My Listings
+                    </button>
+                    <button onclick="openSellModal()" class="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded-lg font-bold transition shadow-md">
                         <i class="fa-solid fa-plus mr-1"></i> Sell Item
                     </button>
-                    <!-- User Profile / Login -->
+
                     <div id="user-profile-container" class="ml-4 border-l border-kenyagreen-600 pl-4 relative">
-                        <!-- Logged In State -->
-                        <div id="user-logged-in" class="hidden flex items-center gap-2 cursor-pointer"
-                            onclick="toggleProfileMenu()">
-                            <div id="user-avatar"
-                                class="w-8 h-8 rounded-full bg-yellow-400 text-kenyagreen-800 font-bold flex items-center justify-center text-sm shadow-md hover:bg-yellow-300 transition">
+                        <div id="user-logged-in" class="hidden flex items-center gap-2 cursor-pointer" onclick="toggleProfileMenu()">
+                            <div id="user-avatar" class="w-8 h-8 rounded-full bg-yellow-400 text-kenyagreen-800 font-bold flex items-center justify-center text-sm shadow-md">
                                 JD
                             </div>
-                            <span id="user-display-name"
-                                class="text-sm font-medium hover:text-yellow-400 transition">John Doe</span>
+                            <span id="user-display-name" class="text-sm font-medium hover:text-yellow-400">User</span>
                             <i class="fa-solid fa-chevron-down text-xs"></i>
                         </div>
-                        <!-- Logged Out State -->
-                        <a href="login.html" id="login-link"
-                            class="nav-btn hover:text-yellow-400 transition font-medium"><i
-                                class="fa-solid fa-user mr-1"></i> Login</a>
+                        
+                        <a href="/login" id="login-link" class="nav-btn hover:text-yellow-400 transition font-medium">
+                            <i class="fa-solid fa-user mr-1"></i> Login
+                        </a>
 
-                        <!-- Profile Dropdown -->
-                        <div id="profile-dropdown"
-                            class="hidden absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden">
+                        <div id="profile-dropdown" class="hidden absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden text-gray-800">
                             <div class="bg-kenyagreen-800 p-4 text-white">
                                 <div class="flex items-center gap-3">
-                                    <div id="dropdown-avatar"
-                                        class="w-12 h-12 rounded-full bg-yellow-400 text-kenyagreen-800 font-bold flex items-center justify-center text-lg">
+                                    <div id="dropdown-avatar" class="w-12 h-12 rounded-full bg-yellow-400 text-kenyagreen-800 font-bold flex items-center justify-center text-lg">
                                         JD
                                     </div>
                                     <div>
-                                        <p id="dropdown-name" class="font-bold">John Doe</p>
-                                        <p id="dropdown-phone" class="text-xs text-gray-300">+254 712 345 678</p>
+                                        <p id="dropdown-name" class="font-bold">Guest User</p>
+                                        <p id="dropdown-phone" class="text-xs text-gray-300">+254 --- --- ---</p>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="p-4">
                                 <p class="text-xs text-gray-500 uppercase font-bold mb-3">Your Activity</p>
                                 <div class="grid grid-cols-2 gap-3 mb-4">
-                                    <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="bg-green-50 p-3 rounded-lg text-center">
                                         <p class="text-2xl font-bold text-kenyagreen-700" id="user-listings-count">0</p>
-                                        <p class="text-xs text-gray-600">Active Listings</p>
+                                        <p class="text-[10px] text-gray-600">Listings</p>
                                     </div>
-                                    <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="bg-blue-50 p-3 rounded-lg text-center">
                                         <p class="text-2xl font-bold text-blue-700" id="user-trades-count">0</p>
-                                        <p class="text-xs text-gray-600">Trades Made</p>
+                                        <p class="text-[10px] text-gray-600">Trades</p>
                                     </div>
                                 </div>
-
-                                <div class="space-y-1">
-                                    <a href="javascript:void(0)" onclick="switchView('selling'); toggleProfileMenu()"
-                                        class="block px-3 py-2 rounded-lg hover:bg-gray-100 text-sm font-medium text-gray-700">
-                                        <i class="fa-solid fa-tags w-5 mr-2 text-kenyagreen-600"></i>My Listings
-                                    </a>
-                                    <button onclick="handleLogout()"
-                                        class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-sm font-medium text-red-600">
-                                        <i class="fa-solid fa-right-from-bracket w-5 mr-2"></i>Logout
-                                    </button>
-                                </div>
+                                <button onclick="handleLogout()" class="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-sm font-medium text-red-600">
+                                    <i class="fa-solid fa-right-from-bracket w-5 mr-2"></i>Logout
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-2xl focus:outline-none" onclick="toggleMobileMenu()">
+                <button class="md:hidden text-2xl" onclick="toggleMobileMenu()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-kenyagreen-600 border-t border-kenyagreen-500">
-            <a onclick="switchView('market'); toggleMobileMenu()"
-                class="block py-3 px-4 hover:bg-kenyagreen-500 cursor-pointer">Marketplace</a>
-            <a onclick="switchView('selling'); toggleMobileMenu()"
-                class="block py-3 px-4 hover:bg-kenyagreen-500 cursor-pointer">My Listings & Offers</a>
-            <a onclick="openSellModal(); toggleMobileMenu()"
-                class="block py-3 px-4 bg-yellow-500 text-black font-bold text-center mx-4 my-2 rounded">Post New
-                Item</a>
-            <!-- Mobile User Profile -->
-            <div id="mobile-user-profile" class="border-t border-kenyagreen-500">
-                <div id="mobile-logged-in" class="hidden flex items-center gap-3 py-3 px-4">
-                    <div id="mobile-user-avatar"
-                        class="w-10 h-10 rounded-full bg-yellow-400 text-kenyagreen-800 font-bold flex items-center justify-center">
-                        JD
-                    </div>
-                    <span id="mobile-user-name" class="font-medium">John Doe</span>
-                </div>
-                <a href="login.html" id="mobile-login-link"
-                    class="block py-3 px-4 hover:bg-kenyagreen-500 cursor-pointer">Login</a>
-            </div>
+        <div id="mobile-menu" class="hidden bg-kenyagreen-700 border-t border-kenyagreen-500 pb-4">
+            <a onclick="switchView('market'); toggleMobileMenu()" class="block py-3 px-4 hover:bg-kenyagreen-600 cursor-pointer">Marketplace</a>
+            <a onclick="switchView('selling'); toggleMobileMenu()" class="block py-3 px-4 hover:bg-kenyagreen-600 cursor-pointer">My Listings</a>
+            <a onclick="openSellModal(); toggleMobileMenu()" class="block py-3 px-4 bg-yellow-500 text-black font-bold text-center mx-4 my-2 rounded">Post New Item</a>
+            <a href="/login" id="mobile-login-btn" class="block py-3 px-4 text-center border border-white mx-4 rounded mt-2">Login / Register</a>
+            <button onclick="handleLogout()" id="mobile-logout-btn" class="hidden block py-3 px-4 text-center text-red-200 mx-4 mt-2">Logout</button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-6 max-w-6xl mx-auto w-full relative">
+    <main class="flex-1 overflow-y-auto p-4 md:p-6 max-w-6xl mx-auto w-full">
 
-        <!-- MARKET VIEW -->
         <div id="view-market" class="view-section fade-in">
-            <!-- Search & Filter -->
-            <div
-                class="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div class="bg-white p-4 rounded-xl shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div class="relative w-full md:w-96">
                     <i class="fa-solid fa-search absolute left-3 top-3.5 text-gray-400"></i>
-                    <input type="text" id="search-input" onkeyup="renderMarket()"
-                        placeholder="Search maize, beans, tools..."
-                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-kenyagreen-500">
+                    <input type="text" id="search-input" onkeyup="renderMarket()" placeholder="Search maize, beans, tools..."
+                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 outline-none">
                 </div>
 
-                <div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-                    <select id="filter-type" onchange="renderMarket()"
-                        class="px-4 py-3 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-kenyagreen-500">
+                <div class="flex gap-2 w-full md:w-auto">
+                    <select id="filter-type" onchange="renderMarket()" class="flex-1 md:flex-none px-4 py-3 border border-gray-200 rounded-lg bg-white outline-none">
                         <option value="all">All Types</option>
                         <option value="cash">Cash (KES)</option>
-                        <option value="barter">Barter (Goods)</option>
+                        <option value="barter">Barter (Exchange)</option>
                     </select>
-                    <select id="filter-location" onchange="renderMarket()"
-                        class="px-4 py-3 border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-kenyagreen-500">
-                        <option value="all">Countrywide</option>
+                    <select id="filter-location" onchange="renderMarket()" class="flex-1 md:flex-none px-4 py-3 border border-gray-200 rounded-lg bg-white outline-none">
+                        <option value="all">Everywhere</option>
                         <option value="Nairobi">Nairobi</option>
                         <option value="Eldoret">Eldoret</option>
                         <option value="Nakuru">Nakuru</option>
                         <option value="Kisumu">Kisumu</option>
-                        <option value="Mombasa">Mombasa</option>
-                        <option value="Machakos">Machakos</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Products Grid -->
-            <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Items injected by JS -->
-            </div>
+            <div id="market-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
             <div id="empty-market" class="hidden text-center py-20">
-                <div class="inline-block p-6 bg-gray-100 rounded-full mb-4">
-                    <i class="fa-solid fa-basket-shopping text-4xl text-gray-400"></i>
-                </div>
-                <h3 class="text-xl font-bold text-gray-600">No items found</h3>
-                <p class="text-gray-500">Try adjusting your filters or search terms.</p>
+                <i class="fa-solid fa-basket-shopping text-5xl text-gray-300 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-600">Nothing to show</h3>
+                <p class="text-gray-400">Try changing your filters.</p>
             </div>
         </div>
 
-        <!-- MY LISTINGS / SELLING VIEW -->
-        <div id="view-selling" class="view-section hidden fade-in space-y-8">
-            <h2 class="text-2xl font-bold border-b pb-4 border-gray-200">My Listings & Trades</h2>
-
+        <div id="view-selling" class="view-section hidden fade-in">
+            <h2 class="text-2xl font-bold mb-6 text-kenyagreen-800">My Farm Shop</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Active Listings -->
                 <div>
-                    <h3 class="font-bold text-lg text-kenyagreen-800 mb-4"><i class="fa-solid fa-store mr-2"></i>Items
-                        I'm Selling</h3>
-                    <div id="my-listings-container" class="space-y-4">
-                        <!-- My items injected here -->
-                    </div>
+                    <h3 class="font-bold text-gray-700 mb-4"><i class="fa-solid fa-store mr-2"></i>Active Listings</h3>
+                    <div id="my-listings-container" class="space-y-4"></div>
                 </div>
-
-                <!-- Incoming Offers -->
                 <div>
-                    <h3 class="font-bold text-lg text-blue-800 mb-4"><i class="fa-solid fa-handshake mr-2"></i>Incoming
-                        Offers</h3>
+                    <h3 class="font-bold text-gray-700 mb-4"><i class="fa-solid fa-handshake mr-2"></i>Offers Received</h3>
                     <div id="incoming-offers-container" class="space-y-4">
-                        <div class="bg-blue-50 border border-blue-100 p-4 rounded-lg text-center text-blue-600">
-                            <p class="text-sm">Offers from other farmers will appear here.</p>
+                        <div class="bg-white p-6 rounded-xl text-center border border-dashed border-gray-300">
+                            <p class="text-gray-400 text-sm">No offers received yet.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
 
-    <!-- SELL ITEM MODAL -->
-    <div id="sell-modal"
-        class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div id="sell-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="bg-kenyagreen-800 p-4 flex justify-between items-center text-white shrink-0">
-                <h3 class="font-bold text-lg">Post New Item</h3>
-                <button onclick="closeModal('sell-modal')" class="hover:text-yellow-400"><i
-                        class="fa-solid fa-times text-xl"></i></button>
+            <div class="bg-kenyagreen-800 p-4 flex justify-between items-center text-white">
+                <h3 class="font-bold">Post New Item</h3>
+                <button onclick="closeModal('sell-modal')"><i class="fa-solid fa-times text-xl"></i></button>
             </div>
-
             <div class="p-6 overflow-y-auto">
                 <form id="sell-form" onsubmit="handleSellSubmit(event)" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">What are you selling?</label>
-                        <input type="text" id="item-name" required placeholder="e.g., 90kg Bag of Maize"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none">
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Item Name</label>
+                        <input type="text" id="item-name" required placeholder="e.g. 90kg Maize" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-kenyagreen-500 outline-none">
                     </div>
-
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Category</label>
-                            <select id="item-category"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none">
+                            <select id="item-category" class="w-full px-4 py-2 border rounded-lg outline-none">
                                 <option>Cereals</option>
-                                <option>Vegetables</option>
-                                <option>Fruits</option>
                                 <option>Livestock</option>
-                                <option>Inputs (Fertilizer/Seeds)</option>
-                                <option>Tools/Machinery</option>
+                                <option>Vegetables</option>
+                                <option>Tools</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-1">Location</label>
-                            <select id="item-location"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none">
+                            <select id="item-location" class="w-full px-4 py-2 border rounded-lg outline-none">
                                 <option>Nairobi</option>
                                 <option>Eldoret</option>
                                 <option>Nakuru</option>
-                                <option>Mombasa</option>
                                 <option>Kisumu</option>
-                                <option>Kitale</option>
-                                <option>Machakos</option>
-                                <option>Nyeri</option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- Transaction Mode Toggle -->
-                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <label class="block text-sm font-bold text-gray-700 mb-3">How do you want to be paid?</label>
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1">Description</label>
+                        <textarea id="item-desc" required placeholder="Describe the quality, quantity, etc." class="w-full px-4 py-2 border rounded-lg outline-none h-20"></textarea>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border">
+                        <label class="block text-sm font-bold text-gray-700 mb-2">Trade Mode</label>
                         <div class="flex gap-4 mb-3">
                             <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="transType" value="cash" checked onchange="togglePriceMode()"
-                                    class="w-4 h-4 text-kenyagreen-600 focus:ring-kenyagreen-500">
-                                <span class="font-medium">Cash (KES)</span>
+                                <input type="radio" name="transType" value="cash" checked onchange="togglePriceMode()"> <span class="text-sm font-medium">Cash (KES)</span>
                             </label>
                             <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="transType" value="barter" onchange="togglePriceMode()"
-                                    class="w-4 h-4 text-kenyagreen-600 focus:ring-kenyagreen-500">
-                                <span class="font-medium">Barter (Exchange)</span>
+                                <input type="radio" name="transType" value="barter" onchange="togglePriceMode()"> <span class="text-sm font-medium">Barter</span>
                             </label>
                         </div>
-
-                        <!-- Dynamic Input based on selection -->
                         <div id="price-input-container">
-                            <label class="block text-xs text-gray-500 mb-1 uppercase font-bold">Price (KSh)</label>
-                            <input type="number" id="item-price" min="0" placeholder="0.00"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none">
+                            <input type="number" id="item-price" placeholder="Price in KSh" class="w-full px-4 py-2 border rounded-lg">
                         </div>
                         <div id="barter-input-container" class="hidden">
-                            <label class="block text-xs text-gray-500 mb-1 uppercase font-bold">What do you want in
-                                exchange?</label>
-                            <textarea id="item-barter-desc" rows="2"
-                                placeholder="e.g., Willing to trade for 2 bags of DAP fertilizer"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none"></textarea>
+                            <textarea id="item-barter-desc" placeholder="What do you want in exchange?" class="w-full px-4 py-2 border rounded-lg"></textarea>
                         </div>
                     </div>
-
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1">Description (Optional)</label>
-                        <textarea id="item-desc" rows="2"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none"></textarea>
-                    </div>
-
-                    <button type="submit"
-                        class="w-full py-3 bg-kenyagreen-600 hover:bg-kenyagreen-700 text-white font-bold rounded-lg shadow-lg transition transform active:scale-95">Post
-                        Item</button>
+                    <button type="submit" class="w-full py-3 bg-kenyagreen-600 hover:bg-kenyagreen-700 text-white font-bold rounded-lg transition shadow-lg">Confirm Listing</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- TRADE/BUY MODAL -->
-    <div id="trade-modal"
-        class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+    <div id="trade-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+            <div class="bg-kenyagreen-800 p-4 flex justify-between items-center text-white">
+                <h3 id="trade-modal-title" class="font-bold">Contact Seller</h3>
+                <button onclick="closeModal('trade-modal')"><i class="fa-solid fa-times text-xl"></i></button>
+            </div>
             <div class="p-6">
                 <div class="text-center mb-6">
-                    <div class="inline-block p-3 rounded-full bg-green-100 text-green-600 mb-3"
-                        id="trade-icon-container">
-                        <i class="fa-solid fa-money-bill-wave text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800" id="trade-modal-title">Confirm Purchase</h3>
-                    <p class="text-sm text-gray-500 mt-1" id="trade-modal-subtitle">You are about to buy this item.</p>
+                    <div id="trade-icon-container" class="text-4xl text-kenyagreen-600 mb-2"></div>
+                    <h4 id="trade-item-name" class="text-xl font-bold"></h4>
+                    <p id="trade-item-location" class="text-gray-500 text-sm"></p>
+                    <p id="trade-item-price" class="text-kenyagreen-700 font-bold text-lg mt-1"></p>
                 </div>
 
-                <div class="bg-gray-50 p-4 rounded-lg border border-gray-100 mb-6">
-                    <p class="text-xs text-gray-400 uppercase font-bold mb-1">Item Details</p>
-                    <p class="font-bold text-gray-800" id="trade-item-name">Maize 90kg</p>
-                    <p class="text-sm text-kenyagreen-700 font-medium mt-1" id="trade-item-price">KSh 4,500</p>
-                    <p class="text-xs text-gray-500 mt-2"><i class="fa-solid fa-location-dot mr-1"></i> <span
-                            id="trade-item-location">Nairobi</span></p>
-                </div>
-
-                <!-- Contact Form for Trade/Buy -->
-                <form onsubmit="handleTradeSubmit(event)" class="space-y-4">
+                <form id="trade-form" onsubmit="handleTradeSubmit(event)" class="space-y-4">
                     <input type="hidden" id="trade-target-id">
-
+                    
                     <div id="barter-offer-section" class="hidden">
                         <label class="block text-sm font-bold text-gray-700 mb-1">Your Offer</label>
-                        <textarea id="trade-offer-desc" required
-                            placeholder="Describe exactly what you are offering in exchange..."
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-kenyagreen-500"></textarea>
+                        <textarea id="trade-offer-desc" placeholder="Describe what you want to trade..." class="w-full px-4 py-2 border rounded-lg outline-none h-24"></textarea>
                     </div>
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-1">Your Phone Number</label>
-                        <div class="flex">
-                            <span
-                                class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-bold">+254</span>
-                            <input type="tel" required placeholder="712 345 678"
-                                class="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none">
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">The seller will contact you to finalize the exchange.</p>
+                        <input type="tel" id="trade-phone" placeholder="e.g. 254712345678" class="w-full px-4 py-2 border rounded-lg outline-none focus:ring-2 focus:ring-kenyagreen-500">
                     </div>
 
-                    <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="closeModal('trade-modal')"
-                            class="flex-1 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50">Cancel</button>
-                        <button type="submit"
-                            class="flex-1 py-2 bg-kenyagreen-600 text-white rounded-lg font-bold hover:bg-kenyagreen-700 shadow-md">Send
-                            Request</button>
+                    <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 text-sm text-yellow-800">
+                        <i class="fa-solid fa-info-circle mr-1"></i> Your contact details will be shared with the seller.
                     </div>
+
+                    <button type="submit" class="w-full py-3 bg-kenyagreen-600 hover:bg-kenyagreen-700 text-white font-bold rounded-lg transition shadow-md">
+                        Send Inquiry
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast"
-        class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
-        <i class="fa-solid fa-circle-check text-green-400"></i>
-        <span id="toast-message">Operation successful</span>
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <span id="toast-message">Success!</span>
     </div>
 
-    <script src="js/market.js"></script>
+    <script src="/user/js/market.js"></script>
 </body>
 
 </html>

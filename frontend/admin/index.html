@@ -20,20 +20,20 @@
             <span class="font-bold text-lg tracking-wide">Admin<span class="text-yellow-400">Panel</span></span>
         </div>
 
-        <nav class="flex-1 py-6 space-y-1">
-            <a href="javascript:void(0)" onclick="switchView('dashboard')"
+<nav class="flex-1 py-6 space-y-1">
+            <a href="javascript:void(0)" id="nav-dashboard" onclick="switchView('dashboard')"
                 class="flex items-center px-6 py-3 bg-kenyagreen-600 border-l-4 border-yellow-400 text-white font-medium">
                 <i class="fa-solid fa-chart-pie w-6"></i> Dashboard
             </a>
-            <a href="javascript:void(0)" onclick="switchView('users')"
+            <a href="javascript:void(0)" id="nav-users" onclick="switchView('users')"
                 class="flex items-center px-6 py-3 text-gray-300 hover:bg-kenyagreen-600 hover:text-white transition">
                 <i class="fa-solid fa-users w-6"></i> Users
             </a>
-            <a href="javascript:void(0)" onclick="switchView('products')"
+            <a href="javascript:void(0)" id="nav-products" onclick="switchView('products')"
                 class="flex items-center px-6 py-3 text-gray-300 hover:bg-kenyagreen-600 hover:text-white transition">
                 <i class="fa-solid fa-tags w-6"></i> Products
             </a>
-            <a href="javascript:void(0)" onclick="switchView('requests')"
+            <a href="javascript:void(0)" id="nav-requests" onclick="switchView('requests')"
                 class="flex items-center px-6 py-3 text-gray-300 hover:bg-kenyagreen-600 hover:text-white transition">
                 <i class="fa-solid fa-handshake w-6"></i> Requests
             </a>
@@ -117,12 +117,13 @@
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
-                            <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-bold">
+<thead class="bg-gray-50 text-gray-500 text-xs uppercase font-bold">
                                 <tr>
                                     <th class="px-6 py-4">Full Name</th>
                                     <th class="px-6 py-4">Phone</th>
                                     <th class="px-6 py-4">Role</th>
                                     <th class="px-6 py-4">Joined</th>
+                                    <th class="px-6 py-4 text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm divide-y divide-gray-100" id="users-table-body">
@@ -199,7 +200,7 @@
         <span id="toast-message">Action successful</span>
     </div>
 
-    <script src="js/admin.js"></script>
+    <script src="admin/js/admin.js"></script>
 </body>
 
 </html>

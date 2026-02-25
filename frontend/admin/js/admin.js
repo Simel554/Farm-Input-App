@@ -37,7 +37,7 @@ async function loadUsers() {
             const date = new Date(user.created_at).toLocaleDateString();
 
             tableBody.innerHTML += `
-                <tr class="hover:bg-gray-50 transition">
+                <tr class="hover:bg-gray-50 transition" id="user-row-${user.id}">
                     <td class="px-6 py-4 font-bold text-gray-800">${user.fullname}</td>
                     <td class="px-6 py-4 text-gray-600">${user.phone}</td>
                     <td class="px-6 py-4">
@@ -46,6 +46,11 @@ async function loadUsers() {
                         </span>
                     </td>
                     <td class="px-6 py-4 text-gray-500 text-sm">${date}</td>
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <button onclick="deleteUser(${user.id})" class="text-red-500 hover:text-red-700 bg-red-50 p-2 rounded transition" title="Delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
                 </tr>
             `;
         });
@@ -212,6 +217,35 @@ async function updateOfferStatus(offerId, status) {
     }
 }
 
+// Delete User
+async function deleteUser(userId) {
+    if (!confirm('Are you sure you want to delete this user?')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/admin/users/${userId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            showToast('User deleted successfully');
+            // Remove row from table
+            const row = document.getElementById(`user-row-${userId}`);
+            if (row) {
+                row.style.opacity = '0.5';
+                setTimeout(() => row.remove(), 300);
+            }
+            // Reload stats
+            loadDashboardStats();
+        } else {
+            const data = await response.json();
+            showToast(data.error || 'Failed to delete user');
+        }
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        showToast('An error occurred');
+    }
+}
+
 // Switch Views
 function switchView(viewName) {
     currentView = viewName;
@@ -273,14 +307,6 @@ function loadAdminProfile() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (currentUser && currentUser.fullname) {
-        // Get initials
-        const initials = currentUser.fullname
-            .split(' ')
-            .map(name => name[0])
-            .join('')
-            .toUpperCase()
-            .substring(0, 2);
-
         // Update avatar and name in header
         const avatarImg = document.querySelector('header img');
         const userName = document.querySelector('header .text-sm.font-bold');

@@ -5,57 +5,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Shamba Trade Kenya</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Shared Theme -->
-    <script src="../shared/theme.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kenyagreen: {
+                            500: '#2d6a4f',
+                            600: '#1b4332',
+                            700: '#081c15',
+                            800: '#05100d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="/shared/theme.js"></script>
 </head>
 
 <body class="bg-gray-50 h-screen flex items-center justify-center font-sans">
 
     <div class="flex w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden mx-4 h-[550px]">
 
-        <div
-            class="hidden md:flex md:w-1/2 bg-kenyagreen-800 flex-col justify-center items-center text-white p-8 relative overflow-hidden">
+        <div class="hidden md:flex md:w-1/2 bg-kenyagreen-800 flex-col justify-center items-center text-white p-8 relative overflow-hidden">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400 rounded-full opacity-20"></div>
             <div class="absolute bottom-10 right-10 w-20 h-20 bg-white rounded-full opacity-10"></div>
 
             <div class="text-center z-10">
                 <h2 class="text-3xl font-bold mb-2">ShambaTrade <span class="text-yellow-400">KE</span></h2>
                 <p class="text-gray-200">Connecting farmers to other farmers across Kenya.</p>
-
                 <div class="mt-8 space-y-3 text-left bg-kenyagreen-600 bg-opacity-30 p-6 rounded-lg backdrop-blur-sm">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Fair Prices</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Direct Messaging</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-check text-yellow-400"></i> <span>Barter & Cash</span>
-                    </div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-400"></i> <span>Fair Prices</span></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-400"></i> <span>Direct Messaging</span></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-400"></i> <span>Barter & Cash</span></div>
                 </div>
             </div>
         </div>
 
         <div class="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative">
-
             <div class="text-center md:text-left mb-6">
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">Karibu Tena!</h3>
                 <p class="text-gray-500">Please select your account type and enter your details.</p>
             </div>
 
-            <!-- Role Selection Tabs -->
             <div class="mb-6">
                 <div class="flex gap-3 p-1 bg-gray-100 rounded-lg">
                     <button type="button" onclick="selectRole('farmer')" id="farmer-tab"
                         class="flex-1 py-3 px-4 rounded-md font-bold transition-all duration-200 bg-kenyagreen-600 text-white shadow-md">
-                        <i></i>Farmer Login
+                        Farmer Login
                     </button>
                     <button type="button" onclick="selectRole('admin')" id="admin-tab"
                         class="flex-1 py-3 px-4 rounded-md font-bold transition-all duration-200 bg-transparent text-gray-600 hover:bg-gray-200">
-                        <i></i>Admin Login
+                        Admin Login
                     </button>
                 </div>
             </div>
@@ -64,8 +71,7 @@
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-1">Phone Number</label>
                     <div class="flex">
-                        <span
-                            class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-bold">+254</span>
+                        <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-bold">+254</span>
                         <input type="tel" id="phone" required placeholder="700 000 000"
                             class="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-kenyagreen-500 focus:outline-none transition">
                     </div>
@@ -79,9 +85,6 @@
                         <i class="fa-solid fa-eye absolute right-4 top-4 text-gray-400 cursor-pointer hover:text-kenyagreen-600"
                             onclick="togglePassword('password', this)"></i>
                     </div>
-                    <div class="flex justify-end mt-1">
-                        <a href="#" class="text-xs text-kenyagreen-600 font-bold hover:underline">Forgot Password?</a>
-                    </div>
                 </div>
 
                 <button type="submit"
@@ -92,14 +95,12 @@
             </form>
 
             <div class="mt-8 text-center text-sm text-gray-600">
-                <p>New to Shamba Trade? <a href="register.html"
-                        class="text-kenyagreen-600 font-bold hover:underline">Create
-                        Account</a></p>
+                <p>New to Shamba Trade? <a href="/" class="text-kenyagreen-600 font-bold hover:underline">Create Account</a></p>
             </div>
         </div>
     </div>
 
-    <script src="js/login.js"></script>
+    <script src="/user/js/login.js"></script>
 </body>
 
 </html>
